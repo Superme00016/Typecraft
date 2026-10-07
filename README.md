@@ -1,88 +1,123 @@
 # Typecraft
 
-中文 | [English](README.en.md)
+English | [中文](README.zh-CN.md)
 
-跨平台桌面打字模拟器。粘贴文字后，可以在应用内预览逐字输入，也可以向其他应用输入。支持速度设置、错字与纠正、停顿规则，以及可选的 AI 助手。
+A local desktop typing simulator for Windows, macOS, and Linux. Paste your text, set a pace or finishing time, and run a preview or type into another application.
 
-## 功能
+## Start here
 
-- 按每秒词数或基础完成分钟数设置速度，显示规则增加的等待时间及预计总时长。
-- 模拟节奏变化、错字、退格纠正；支持暂停、继续和停止。
-- 中文 / English 界面；两个内置规则预设，可新增、编辑、导入和导出 JSON 配置。
-- 外部输入前倒计时 5 秒，按 Esc 停止。
-- AI 助手可生成打字方案、润色、翻译或执行自定义文字任务；结果需手动应用，支持撤销上一次应用。
-- 每次启动检查依赖，缺失或版本不符时显示安装说明、链接及复制按钮。
+Requires **Python 3.10 or newer with Tkinter**. This download contains source code and launchers, not a prebuilt executable. Extract the whole folder before launching; keep its Python files together.
 
-## 下载安装
+- **Windows:** install Python from [python.org](https://www.python.org/downloads/), including Tcl/Tk and the Python launcher, then double-click **Start Windows.bat**. Alternatively, open a terminal in this folder and run `py -3 typecraft.py`.
+- **macOS:** install a Python distribution with Tcl/Tk, such as the python.org installer. Run `python3 typecraft.py` from this folder in Terminal. You can also run `chmod +x "Start macOS.command"` once and double-click that launcher.
+- **Linux:** run `python3 typecraft.py`. If Tkinter is missing, install your distribution's Tkinter package. On Debian/Ubuntu: `sudo apt install python3-tk`. The shell launcher can be run with `sh start-linux.sh`.
 
-这是 Python 源码应用，尚未提供独立 exe / dmg 安装包。下载仓库 ZIP 后完整解压，保持文件在同一目录。需要 **Python 3.10+、Tkinter/Tcl/Tk 和图形桌面**；建议安装仍受支持的 Python 版本。
+Preview mode needs no third-party Python packages. Check your GUI installation with `python3 -m tkinter` (Windows: `py -3 -m tkinter`). A small demonstration window should open.
 
-| 系统 | 启动方式 |
-| --- | --- |
-| Windows | 从 [Python 官网](https://www.python.org/downloads/windows/)安装 Python，包含 Tcl/Tk and IDLE，然后双击 `Start Windows.bat`。 |
-| macOS | 安装含 Tcl/Tk 的 [Python](https://www.python.org/downloads/macos/)，运行 `Start macOS.command`；必要时先执行 `chmod +x "Start macOS.command"`。 |
-| Linux | 在项目目录执行 `sh start-linux.sh`。Ubuntu / Debian / Linux Mint 缺少 Tkinter 时，执行 `sudo apt install python3-tk`。 |
+### Linux: nothing happens when double-clicking
 
-也可以直接运行 `python3 typecraft.py`（Windows：`py -3 typecraft.py`）。启动器优先使用项目内的 `.venv`，直接运行 Python 命令则使用你指定的解释器。
+Open Terminal in the extracted Typecraft folder and run:
 
-### 启动检查
+```sh
+sh start-linux.sh
+```
 
-检查 Python 版本、Tkinter/Tcl/Tk、SSL、pynput 版本及外部输入后端。全部通过时直接进入主界面；可选组件有问题时仍可进入预览，必需组件不可用时需先修复。安装或授权后重新启动即可复查。检查不联网、不自动安装、不发送按键。
+The Linux launcher checks for Python and Tkinter and shows startup errors in a dialog when `zenity` or `xmessage` is available. Errors also print in Terminal. On Ubuntu, Linux Mint, or Debian, install a missing Tkinter package with `sudo apt install python3-tk`; sudo may ask for your Linux password in Terminal.
 
-缺少 Python 或 Tkinter 时尝试使用系统原生弹窗。Linux 需要 `zenity` 或 `xmessage`；两者都没有或没有图形桌面时，只能在终端查看说明。文件管理器双击脚本无反应时，请在终端运行 `sh start-linux.sh`。
+Some file managers open shell scripts as text or do not execute them on double-click. Running the command above avoids that setting. If you want double-click launching, mark the script executable (`chmod +x start-linux.sh`) and choose **Run** or **Run in Terminal** when your file manager asks.
 
-### 启用外部输入
+## Enable typing into another app
 
-应用内预览无需第三方 Python 包。外部输入需要 `requirements.txt` 中的 pynput。在项目目录安装：
+Install the optional keyboard dependency into a virtual environment **inside this folder**. All three launchers automatically use that `.venv` when present.
 
-**Windows PowerShell**
+Windows, in PowerShell:
 
 ```powershell
 py -3 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe typecraft.py
 ```
 
-**macOS / Linux**
+macOS / Linux, in Terminal:
 
 ```sh
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python typecraft.py
 ```
 
-安装后重新打开启动脚本。Ubuntu / Debian 创建环境可能需要 `sudo apt install python3-venv`；若 evdev 编译失败，可能需要 `sudo apt install build-essential python3-dev`。
+On Debian/Ubuntu, creating a virtual environment may also require `sudo apt install python3-venv`.
 
-## 使用方法
+If pip reports that it cannot compile `evdev` on Linux, install your distribution's build tools and Python headers (Debian/Ubuntu: `sudo apt install build-essential python3-dev`) and retry. A distribution package is also usable if its pynput version satisfies `requirements.txt`; older packages will be flagged by the startup check.
 
-1. 粘贴文字，选择速度或基础完成时间。
-2. 在预览中检查规则、节奏和预计总时长。
-3. 如需输入其他应用，选择外部输入并点击开始，在 5 秒倒计时内点选目标文本框。
-4. 通过暂停、停止按钮控制输入；外部输入可按 Esc 停止。
+1. Paste the text and choose **Type into another app**.
+2. Open an empty document in a plain-text editor.
+3. Click **Start typing**, then click the destination text field during the five-second countdown.
+4. Press **Esc** to stop immediately, including during the countdown. The app's **Stop** button also works. If you pause, resuming gives you another five seconds to select the destination.
 
-速度中的一个“词”按 5 个字符计算，包括空格；它不等于中文词数或空格分隔的单词统计。自定义规则等待时间会增加总时长。倒计时、手动暂停和系统延迟不计入基础时间，完成时间不是实时保证。
+Typing follows whichever window currently has keyboard focus. Keep the target selected while it runs. **Enter and Tab are real keypresses**: they can submit a chat/form or move focus. Test in a plain-text editor first. Starting again begins from the start of your source, so clear or reposition the destination yourself.
 
-外部输入跟随键盘焦点，Enter / Tab 会发送真实按键，可能提交表单或切换焦点。建议先在空白文本编辑器里试运行。停止不会删除已输入到其他应用的内容。
+## Controls
 
-## 规则与 AI
+| Control | Behavior |
+| --- | --- |
+| Words / second | Average pace, using the standard typing word of five characters, including spaces. `0.8` words/sec = 48 WPM. |
+| Finish in minutes | Base typing time. Custom rule waits extend it; the main page shows base time, added waits, and expected total. Countdown and manual pauses are excluded. |
+| Mistakes | Probability of automatic nearby-key errors, if enabled in the profile. Custom rules have their own probabilities. |
+| Rhythm variation | Uneven keystrokes, word pauses, punctuation pauses, and occasional hesitation. At zero, ordinary keystrokes are evenly spaced. Corrections still take extra strokes. |
+| Relaxed / Natural / Quick | Presets for pace, mistakes, and rhythm. Choosing a preset switches back to words/second. |
+| Preview | Shows every emitted stroke; deliberate mistakes briefly appear in red. External mode also mirrors the emitted strokes here. |
+| Open / Save / Copy | Import UTF-8 text, save the displayed preview, or copy it to the clipboard. |
 
-- [中文规则说明](RULES.zh-CN.md)：错字、纠正、等待时长、导入和导出。
-- [AI 使用说明](AI.zh-CN.md)：兼容的 Chat Completions 接口、密钥、生成和应用结果。
-- [完整英文说明](README.en.md)：控件、计时规则及输入细节。
+The live word counter counts whitespace-separated words; speed uses five-character typing words. These are different measurements. Error percentages are probabilities, so short passages may have no mistakes. Automatic nearby-key mistakes use QWERTY neighbors. Custom profiles support literal replacements and pauses; rules default to correction, but can intentionally retain wrong text.
 
-普通打字与预览不联网。只有主动调用 AI 时，AI 页文字和指令才会发送给你配置的服务商，可能产生服务商费用。密钥只保留在当前会话，不写入设置。取消请求会忽略迟到的结果，不保证服务端取消计费。
+## Timing and text behavior
 
-界面语言、已应用规则和不含密钥的连接设置保存在 `user_data/settings.json`。规则中可能包含用户自定义文字；此目录不应提交到 Git。原文不会自动保存。
+- The engine creates a random typing plan and scales ordinary stroke timing to your base pace or duration. Profile delays are added without compression. The displayed plan is used at Start; after completion or Stop a fresh plan is prepared for the next run.
+- Finish time is a target, not a real-time guarantee. A busy computer, sleep, an unresponsive destination, or OS input latency can delay completion. There is no claim that the simulation is indistinguishable from a human.
+- Text is limited to 100,000 characters and 24 hours per run. Extremely fast settings are rejected: at most 250 planned strokes/sec in preview, or 60 in external mode.
+- Spaces, blank lines, punctuation, and Unicode are preserved in preview. Windows/old-Mac line endings are normalized to `\n`. Non-text control characters are rejected.
+- Stopping preserves partial output. If you stop between a typo and its correction, that typo may remain. Stop does not erase text in another application.
+- Preview is a record of emitted keystrokes, not a readback from the target application. Autocorrect, auto-indent, smart quotes, shortcuts, focus changes, keyboard layouts, and target restrictions can alter external results. Disable editor transformations when exact output matters.
+- Text stays in memory until you explicitly copy or save it. Interface language and applied profiles are saved to `user_data/settings.json` beside the app. Ordinary typing has no network calls, telemetry, or automatic text history. Generate sends the AI-page input and instructions to your configured endpoint. Test connection sends only a short test prompt, without your source text. Closing the app discards unsaved text. An external destination may have its own storage/network behavior.
 
-## 已知限制
+## Platform limits
 
-- Linux 外部输入需要 X11，不支持 Wayland；预览仍可使用。
-- macOS 需要给予运行 Python 的程序辅助功能 / 输入监控权限，授权后重启。
-- Windows 的受保护或以管理员身份运行的目标可能拒绝模拟输入。
-- Linux X11 实测出现过中文退格纠正后字符不正确；中文外部输入尚不能保证准确。预览支持 Unicode。
-- 目标应用的自动纠正、缩进、输入法和快捷键可能改变输出；预览不是目标应用内容的回读。
-- 当前已在 Linux 测试；Windows / macOS 尚未实机验证。真实 AI 服务商调用也尚未验证。
+- **Windows:** ordinary desktop text fields are the intended target. Protected or elevated applications may reject simulated input. Unicode acceptance depends on the destination.
+- **macOS:** allow the Python launcher or Terminal under **System Settings → Privacy & Security → Accessibility** and, where requested, **Input Monitoring**. Restart after granting access. The app refuses external typing if the keyboard listener reports it is untrusted.
+- **Linux:** preview works with Tkinter on graphical desktops. External typing in this version requires **X11**; the app rejects Wayland sessions, where pynput's support is limited. Select an X11 desktop session at login if available. No root access is required for the X11 backend.
+- Unicode outside basic letters, particularly emoji or input-method composition, may not work reliably in every external application. A real Linux X11 test reproduced an incorrect Chinese character after correction; Chinese direct keyboard delivery is not verified as reliable. Preview supports Unicode; test the actual target with a short sample.
 
-## 项目结构与验证范围
+Backend reference: [pynput platform limitations](https://pynput.readthedocs.io/en/latest/limitations.html) and [keyboard API](https://pynput.readthedocs.io/en/latest/keyboard.html).
 
-`typecraft.py` 为界面入口，`startup.py` 检查依赖，`engine.py` 生成输入计划，`rules.py` / `rules_page.py` 处理规则，`ai_*.py` 处理 AI，`keyboard_output.py` 负责外部输入。预设位于 `presets/`。
+## Suggested starting settings
 
-发布前在 Linux、Python 3.12、Tk 8.6 和隔离 X11 显示环境中完成 82 项自动化测试。测试覆盖输入计划、规则、界面、AI 请求处理和启动检查。测试代码和测试记录仅保留在本地，不包含在公开仓库中。
+Start with **0.8 words/sec, 2% mistakes, and 55% variation**. Preview a short paragraph, then adjust the pace. To disable deliberate errors, set **Mistakes to 0%** and disable custom typo rules; custom rules have their own probabilities. For a recording, check the displayed total, which includes added rule waits, and allow five extra seconds if using an external destination.
+
+## Validation
+
+Before publication, 86 automated tests passed on Linux with Python 3.12, Tk 8.6 and an isolated X11 display. Tests cover the typing engine, rules, GUI, AI request handling and startup checks. Test code and detailed test records are retained locally and are not included in this public repository. Windows/macOS execution and live AI provider calls remain unverified.
+
+## Language and custom rules
+
+Use **Settings ▾ → 中文 / English** to switch interface language without changing the source text or active profile. Use **Custom typing rules…** to open a separate editor. Start with the English nearby-key or Chinese homophone preset; add or edit typo/pause rules, then **Apply and return**. Export/import uses data-only JSON; examples are in `presets/`.
+
+A typo rule can match a literal word or phrase, enter a replacement, wait, backspace, and correct it. Unchecking automatic correction retains the replacement. Pause rules wait after matching source text. Every rule has its own probability and min/max millisecond waits. Disabled rules are ignored. Longest typo match wins; ties use list order. Matching is case-sensitive, not word-boundary-based. Multiple pause rules can add their waits.
+
+Configurations accept at most 200 rules and 512 KB, with wait ranges from 0 to 60,000 ms. Unknown fields, duplicate JSON keys, invalid ranges, and non-finite numbers are rejected. Typo replacements exclude emoji/combining sequences because target applications differ in their backspace behavior. Original text can still contain Unicode. Applied profiles and language are saved locally under `user_data/`; source text is not saved automatically.
+
+## Optional AI assistant
+
+Choose **Settings → AI assistant**. Enter an OpenAI-compatible Chat Completions base URL, model ID and your own API key. The default address is `https://api.openai.com/v1`; the model is intentionally blank. Native vendor protocols without a compatible Chat Completions endpoint are not supported. No additional Python package is required for AI requests.
+
+Tasks: design typing rhythm, rewrite naturally, translate, and a custom text instruction. Generated plans are validated against the source and existing profile schema. Results are previewed and never automatically applied or typed. Applying a plan brings the AI-page source and recommended settings to the main page; text tasks replace only the main text. One in-memory undo snapshot is available.
+
+Connection settings can be saved without the key. Keys remain in the app session; an explicit button can read `TYPECRAFT_API_KEY` or `OPENAI_API_KEY`. Generate sends the visible text and instructions; connection testing sends only an OK prompt. Requests can incur provider charges. Cancellation ignores late results locally but does not guarantee provider-side cancellation. The app does not retry automatically.
+
+Remote endpoints require HTTPS. Redirects are blocked and errors do not expose raw response bodies. Local HTTP is supported only on localhost/loopback. Actual provider access, model compatibility and billing were not tested with a real key; local HTTP contract tests and mocked UI tests cover the implementation. See [AI guide](AI.zh-CN.md) for limits and behavior.
+
+## Startup checks
+
+Every launch checks the selected Python interpreter, Tk/Tcl, SSL and optional pynput version/backend. Missing or incompatible dependencies produce installation instructions and official links. Optional failures allow preview; required failures block entry. Restart after installing or granting permissions to check again. The check makes no network requests and installs nothing.
+
+Linux without Tk uses zenity or xmessage for a native error dialog; if neither is available, instructions remain in the terminal. Run `sh start-linux.sh` to read them. On macOS and Windows, launchers use native dialogs when Python is absent. Native launcher behavior has not been verified on those two operating systems.

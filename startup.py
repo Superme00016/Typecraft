@@ -21,7 +21,7 @@ def language():
         path = APP / 'user_data/settings.json'
         if path.stat().st_size < 600000:
             return json.loads(path.read_text(encoding='utf-8')).get('language', 'zh')
-    except (OSError, ValueError, AttributeError):
+    except (OSError, ValueError, AttributeError, RecursionError):
         pass
     return 'zh'
 
@@ -34,7 +34,7 @@ def probe(code):
     """Use the selected interpreter afresh, with a bounded check and no shell."""
     try:
         result = subprocess.run([sys.executable, '-c', code], capture_output=True,
-                                text=True, timeout=8,
+                                text=True, encoding="utf-8", errors="replace", timeout=8,
                                 creationflags=0x08000000 if sys.platform == 'win32' else 0)
         return result.returncode == 0, (result.stderr or result.stdout).strip()[-1600:]
     except (OSError, subprocess.TimeoutExpired) as exc:
@@ -43,7 +43,14 @@ def probe(code):
 
 def pip_command():
     if sys.platform == 'win32':
-        return "& '{}' -m pip install 'pynput>=1.7.7,<2'".format(sys.executable.replace("'", "''"))
+        def quoted(value):
+            return "'" + str(value).replace("'", "''") + "'"
+        python = quoted(sys.executable)
+        if sys.prefix != sys.base_prefix:
+            return "& {} -m pip install 'pynput>=1.7.7,<2'".format(python)
+        venv = quoted(APP / '.venv')
+        executable = quoted(APP / '.venv' / 'Scripts' / 'python.exe')
+        return "& {} -m venv {}\n& {} -m pip install 'pynput>=1.7.7,<2'".format(python, venv, executable)
     if sys.prefix != sys.base_prefix:
         return shlex.quote(sys.executable) + " -m pip install 'pynput>=1.7.7,<2'"
     python = shlex.quote(sys.executable)
