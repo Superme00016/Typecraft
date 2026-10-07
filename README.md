@@ -84,7 +84,7 @@ The live word counter counts whitespace-separated words; speed uses five-charact
 ## Platform limits
 
 - **Windows:** ordinary desktop text fields are the intended target. Protected or elevated applications may reject simulated input. Unicode acceptance depends on the destination.
-- **macOS:** allow the Python launcher or Terminal under **System Settings → Privacy & Security → Accessibility** and, where requested, **Input Monitoring**. Restart after granting access. The app refuses external typing if the keyboard listener reports it is untrusted.
+- **macOS:** allow the Python launcher or Terminal under **System Settings → Privacy & Security → Accessibility** and, where requested, **Input Monitoring**. Restart after granting access. The app checks OS accessibility permission before starting and checks the running listener instance before typing. Listener startup has a five-second timeout; cleanup does not block the UI.
 - **Linux:** preview works with Tkinter on graphical desktops. External typing in this version requires **X11**; the app rejects Wayland sessions, where pynput's support is limited. Select an X11 desktop session at login if available. No root access is required for the X11 backend.
 - Unicode outside basic letters, particularly emoji or input-method composition, may not work reliably in every external application. A real Linux X11 test reproduced an incorrect Chinese character after correction; Chinese direct keyboard delivery is not verified as reliable. Preview supports Unicode; test the actual target with a short sample.
 
@@ -96,7 +96,7 @@ Start with **0.8 words/sec, 2% mistakes, and 55% variation**. Preview a short pa
 
 ## Validation
 
-Before publication, 86 automated tests passed on Linux with Python 3.12, Tk 8.6 and an isolated X11 display. Tests cover the typing engine, rules, GUI, AI request handling and startup checks. Test code and detailed test records are retained locally and are not included in this public repository. Windows/macOS execution and live AI provider calls remain unverified.
+Before publication, 94 automated tests passed on Linux with Python 3.12, Tk 8.6 and an isolated X11 display. Tests cover the typing engine, rules, GUI, AI request handling and startup checks. Test code and detailed test records are retained locally and are not included in this public repository. Local regression tests cover macOS permission handling and listener failures using simulated backends. Real Linux X11 checks cover ASCII input, Escape and listener cleanup. Windows/macOS native execution and live AI provider calls remain unverified.
 
 ## Language and custom rules
 

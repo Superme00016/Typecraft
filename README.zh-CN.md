@@ -85,4 +85,4 @@ python3 -m venv .venv
 
 `typecraft.py` 为界面入口，`startup.py` 检查依赖，`engine.py` 生成输入计划，`rules.py` / `rules_page.py` 处理规则，`ai_*.py` 处理 AI，`keyboard_output.py` 负责外部输入。预设位于 `presets/`。
 
-发布前在 Linux、Python 3.12、Tk 8.6 和隔离 X11 显示环境中完成 86 项自动化测试。测试覆盖输入计划、规则、界面、AI 请求处理和启动检查。测试代码和测试记录仅保留在本地，不包含在公开仓库中。
+发布前在 Linux、Python 3.12、Tk 8.6 和隔离 X11 显示环境中完成 94 项自动化测试。测试覆盖输入计划、规则、界面、AI 请求处理和启动检查。测试代码和测试记录仅保留在本地，不包含在公开仓库中。

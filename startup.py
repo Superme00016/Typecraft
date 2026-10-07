@@ -89,7 +89,7 @@ def inspect_dependencies():
     if wayland:
         issues.append(issue('Wayland → X11', False, tr('当前桌面是 Wayland。外部输入需要注销后，在登录界面选择 X11/Xorg 会话；无需为预览安装组件。', 'This desktop uses Wayland. For external typing, log out and select an X11/Xorg session at login. Preview needs no additional package.'), PLATFORM_URL))
     elif ok:
-        ok, detail = probe('from pynput.keyboard import Controller, Listener; import sys; assert sys.platform != "darwin" or Listener.IS_TRUSTED, "Enable Accessibility / Input Monitoring permissions"')
+        ok, detail = probe('from pynput.keyboard import Controller, Listener; from keyboard_output import check_macos_permissions; check_macos_permissions()')
         if not ok:
             issues.append(issue('pynput / desktop permissions', False, tr('外部输入后端无法加载。Linux 请检查 X11 显示连接；macOS 请在系统设置 → 隐私与安全性中授予运行 Python 的程序辅助功能/输入监控权限，再重新启动。依赖包损坏时可重新安装 pynput。', 'External input backend could not load. Check the X11 display on Linux. On macOS, enable Accessibility/Input Monitoring for the program running Python under System Settings → Privacy & Security, then restart. Reinstall pynput if its dependencies are broken.'), PLATFORM_URL, detail))
     return issues

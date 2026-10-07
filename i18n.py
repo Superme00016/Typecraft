@@ -200,3 +200,5 @@ ZH.update({
     'Could not reach the API. Check the address, network and TLS certificate.': '无法连接 API，请检查地址、网络与 TLS 证书。',
     'The AI request could not be completed. Check the connection settings.': 'AI 请求未能完成，请检查连接设置。',
 })
+
+ZH.update({'The emergency-stop keyboard listener timed out. Check desktop permissions and try again.': '紧急停止按键监听启动超时，请检查桌面权限后重试。'})
