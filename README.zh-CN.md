@@ -4,6 +4,14 @@
 
 跨平台桌面打字模拟器。粘贴文字后，可以在应用内预览逐字输入，也可以向其他应用输入。支持速度设置、错字与纠正、停顿规则，以及可选的 AI 助手。
 
+## 分系统下载
+
+[Windows](https://github.com/Superme00016/Typecraft/releases/download/v0.1.0/Typecraft-v0.1.0-Windows.zip) | [macOS](https://github.com/Superme00016/Typecraft/releases/download/v0.1.0/Typecraft-v0.1.0-macOS.zip) | [Linux](https://github.com/Superme00016/Typecraft/releases/download/v0.1.0/Typecraft-v0.1.0-Linux.zip)
+
+请选择对应系统。每个 ZIP 包只带该系统的启动脚本，**仍需 Python 3.10+ 和 Tkinter**，不是独立安装程序。完整解压后查看 `START-HERE.txt`。Windows/macOS 尚未原生实机验证。
+
+[Release notes / 发布说明](https://github.com/Superme00016/Typecraft/releases/tag/v0.1.0)
+
 ## 功能
 
 - 按每秒词数或基础完成分钟数设置速度，显示规则增加的等待时间及预计总时长。

@@ -4,6 +4,14 @@ English | [中文](README.zh-CN.md)
 
 A local desktop typing simulator for Windows, macOS, and Linux. Paste your text, set a pace or finishing time, and run a preview or type into another application.
 
+## Downloads
+
+[Windows](https://github.com/Superme00016/Typecraft/releases/download/v0.1.0/Typecraft-v0.1.0-Windows.zip) | [macOS](https://github.com/Superme00016/Typecraft/releases/download/v0.1.0/Typecraft-v0.1.0-macOS.zip) | [Linux](https://github.com/Superme00016/Typecraft/releases/download/v0.1.0/Typecraft-v0.1.0-Linux.zip)
+
+Choose your system. These ZIPs contain Python source and only the matching launcher; **Python 3.10+ and Tkinter are still required**. Extract the entire folder, then read `START-HERE.txt`. Windows/macOS native execution remains unverified.
+
+[Release notes / 发布说明](https://github.com/Superme00016/Typecraft/releases/tag/v0.1.0)
+
 ## Start here
 
 Requires **Python 3.10 or newer with Tkinter**. This download contains source code and launchers, not a prebuilt executable. Extract the whole folder before launching; keep its Python files together.
