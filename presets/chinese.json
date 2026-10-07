@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "name": "中文 · 同音错字",
+  "neighbor_errors": false,
+  "neighbor_notice_ms": [
+    180.0,
+    600.0
+  ],
+  "neighbor_backspace_ms": [
+    40.0,
+    90.0
+  ],
+  "neighbor_resume_ms": [
+    80.0,
+    220.0
+  ],
+  "rules": [
+    {
+      "type": "typo",
+      "name": "的／得",
+      "match": "的",
+      "probability": 0.06,
+      "enabled": true,
+      "wait_ms": [
+        300.0,
+        850.0
+      ],
+      "replacement": "得",
+      "correct": true,
+      "backspace_ms": [
+        45.0,
+        100.0
+      ],
+      "resume_ms": [
+        90.0,
+        240.0
+      ]
+    },
+    {
+      "type": "typo",
+      "name": "在／再",
+      "match": "在",
+      "probability": 0.06,
+      "enabled": true,
+      "wait_ms": [
+        300.0,
+        850.0
+      ],
+      "replacement": "再",
+      "correct": true,
+      "backspace_ms": [
+        45.0,
+        100.0
+      ],
+      "resume_ms": [
+        90.0,
+        240.0
+      ]
+    },
+    {
+      "type": "typo",
+      "name": "你好／你号",
+      "match": "你好",
+      "probability": 0.1,
+      "enabled": true,
+      "wait_ms": [
+        300.0,
+        850.0
+      ],
+      "replacement": "你号",
+      "correct": true,
+      "backspace_ms": [
+        45.0,
+        100.0
+      ],
+      "resume_ms": [
+        90.0,
+        240.0
+      ]
+    },
+    {
+      "type": "pause",
+      "name": "句号停顿",
+      "match": "。",
+      "probability": 0.5,
+      "enabled": true,
+      "wait_ms": [
+        300.0,
+        850.0
+      ]
+    },
+    {
+      "type": "pause",
+      "name": "逗号停顿",
+      "match": "，",
+      "probability": 0.3,
+      "enabled": true,
+      "wait_ms": [
+        150.0,
+        400.0
+      ]
+    }
+  ]
+}

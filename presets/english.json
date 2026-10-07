@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "name": "English · nearby keys",
+  "neighbor_errors": true,
+  "neighbor_notice_ms": [
+    180.0,
+    600.0
+  ],
+  "neighbor_backspace_ms": [
+    40.0,
+    90.0
+  ],
+  "neighbor_resume_ms": [
+    80.0,
+    220.0
+  ],
+  "rules": [
+    {
+      "type": "typo",
+      "name": "Letter order",
+      "match": "the",
+      "probability": 0.06,
+      "enabled": true,
+      "wait_ms": [
+        300.0,
+        850.0
+      ],
+      "replacement": "teh",
+      "correct": true,
+      "backspace_ms": [
+        45.0,
+        100.0
+      ],
+      "resume_ms": [
+        90.0,
+        240.0
+      ]
+    },
+    {
+      "type": "pause",
+      "name": "Sentence pause",
+      "match": ".",
+      "probability": 0.4,
+      "enabled": true,
+      "wait_ms": [
+        250.0,
+        750.0
+      ]
+    }
+  ]
+}
