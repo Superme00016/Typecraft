@@ -102,10 +102,6 @@ Backend reference: [pynput platform limitations](https://pynput.readthedocs.io/e
 
 Start with **0.8 words/sec, 2% mistakes, and 55% variation**. Preview a short paragraph, then adjust the pace. To disable deliberate errors, set **Mistakes to 0%** and disable custom typo rules; custom rules have their own probabilities. For a recording, check the displayed total, which includes added rule waits, and allow five extra seconds if using an external destination.
 
-## Validation
-
-Before publication, 94 automated tests passed on Linux with Python 3.12, Tk 8.6 and an isolated X11 display. Tests cover the typing engine, rules, GUI, AI request handling and startup checks. Test code and detailed test records are retained locally and are not included in this public repository. Local regression tests cover macOS permission handling and listener failures using simulated backends. Real Linux X11 checks cover ASCII input, Escape and listener cleanup. Windows/macOS native execution and live AI provider calls remain unverified.
-
 ## Language and custom rules
 
 Use **Settings ▾ → 中文 / English** to switch interface language without changing the source text or active profile. Use **Custom typing rules…** to open a separate editor. Start with the English nearby-key or Chinese homophone preset; add or edit typo/pause rules, then **Apply and return**. Export/import uses data-only JSON; examples are in `presets/`.
